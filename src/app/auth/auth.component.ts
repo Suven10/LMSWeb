@@ -16,6 +16,7 @@ export class AuthComponent implements OnInit {
     profile=new Profile();
     isAuthSuccess;
     isValidFormSubmitted=false;
+    isLoginValid=true;
     authDetails = {
         email   : '',
         password: '',
@@ -78,12 +79,28 @@ export class AuthComponent implements OnInit {
         this.profile.phone=authDet.phone;
     }
 
-    callSignIn() {
-        this.isAuthSuccess = this.authUser.signIn(this.authDetails);
-        if(this.isAuthSuccess.status){
-            document.cookie = 'uid='+ this.isAuthSuccess.userName;
-            this.router.navigateByUrl('/home');
+    mapLoginData(authDet){
+        this.profile.password=authDet.password;
+        this.profile.username=authDet.firstName;
+    }
+
+    callSignIn(form :NgForm) {
+        this.isLoginValid = false;
+        if(form.invalid){
+           return;	
         }
+        this.mapLoginData(this.authDetails);
+        this.isAuthSuccess = this.authUser.signIn(this.profile).subscribe(data=>{
+            this.isAuthSuccess=data.json();
+            if(this.isAuthSuccess.status){
+                document.cookie = 'uid='+ this.isAuthSuccess.guProfileId;
+                this.router.navigateByUrl('/home');
+            }
+            else
+            {
+                return;
+            }
+        });
     }
 
     
