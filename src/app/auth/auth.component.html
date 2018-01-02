@@ -1,0 +1,52 @@
+<section class="centered-form soft-block small-w" *ngIf="!isNewUser">
+    <h3 class="text-center">Sign In</h3>
+
+    <form name="signInForm">
+        <div class="form-group">
+            <input [(ngModel)]="authDetails.email" name="email" required type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email">
+        </div>
+        <div class="form-group">
+            <input [(ngModel)]="authDetails.password" name="password" required type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+        </div>
+        <div class="text-right">
+            <button class="btn btn-primary" (click)="callSignIn()">Submit</button>
+        </div>
+
+        <small id="emailHelp" class="form-text text-muted text-center">Don't have an account? <a routerLink="" (click)="switchSignUpIn()">Sign Up</a></small>
+    </form>
+
+</section>
+
+<section class="centered-form soft-block small-w" *ngIf="isNewUser">
+    <h3 class="text-center">Sign Up</h3>
+
+    <form name="signUpForm" (submit)="callSignUp()">
+        <div class="form-group">
+            <input type="text" class="form-control" id="fname" aria-describedby="emailHelp" placeholder="First name">
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" id="lname" placeholder="Last name">
+        </div>
+        <div class="form-group">
+            <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Email">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputEmail1">User type</label>
+            <select class="form-control" id="exampleFormControlSelect2">
+                <option>Student</option>
+                <option>Instructor</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <input type="password" class="form-control" id="password" aria-describedby="emailHelp" placeholder="Password">
+        </div>
+        <div class="form-group">
+            <input type="password" class="form-control" id="confirmp" aria-describedby="emailHelp" placeholder="Confirm password">
+        </div>
+        <div class="text-right">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+        <small class="form-text text-muted text-center">Already registered in Suve LMS? <a routerLink="" (click)="switchSignUpIn()">Sign Up</a></small>
+    </form>
+
+</section>

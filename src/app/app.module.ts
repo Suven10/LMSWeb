@@ -1,47 +1,64 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
+import { NgModule } from '@angular/core';
 
-import { AppRoutingModule } from './app.routing';
-import { ComponentsModule } from './components/components.module';
 
 import { AppComponent } from './app.component';
+import { AuthComponent } from './auth/auth.component';
+import { TopnavComponent } from './topnav/topnav.component';
+import { HomeComponent } from './home/home.component';
+import { NocontentComponent } from './nocontent/nocontent.component';
+import { AuthService } from "./auth/auth.service";
+import {HomeService} from "./home/home.service";
+import {HttpModule} from "@angular/http";
+import { MycoursesComponent } from './mycourses/mycourses.component';
+import {MycoursesService} from "./mycourses/mycourses.service";
+import {GroupByPipe} from "./topnav/groupby.pipe";
+import { IndividualCourseComponent } from './mycourses/individualcourse/individualcourse.component';
 
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { LoginComponent } from './login/login.component';
-import { UserProfileComponent } from './user-profile/user-profile.component';
-import { TableListComponent } from './table-list/table-list.component';
-import { TypographyComponent } from './typography/typography.component';
-import { IconsComponent } from './icons/icons.component';
-import { MapsComponent } from './maps/maps.component';
-import { NotificationsComponent } from './notifications/notifications.component';
-import { UpgradeComponent } from './upgrade/upgrade.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    DashboardComponent,
-	LoginComponent,
-    UserProfileComponent,
-    TableListComponent,
-    TypographyComponent,
-    IconsComponent,
-    MapsComponent,
-    NotificationsComponent,
-    UpgradeComponent,
-
-  ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    HttpModule,
-    ComponentsModule,
-RouterModule,
-    AppRoutingModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        AuthComponent,
+        TopnavComponent,
+        HomeComponent,
+        NocontentComponent,
+        MycoursesComponent,
+        GroupByPipe,
+        IndividualCourseComponent
+    ],
+    imports: [
+        BrowserModule,
+        FormsModule,
+        HttpModule,
+        RouterModule.forRoot([
+            {
+                path: '',
+                component: AuthComponent
+            },{
+                path: 'home',
+                component: HomeComponent
+            },{
+                path: 'mycourses',
+                component: MycoursesComponent
+            },{
+                path: 'courses/:course',
+                component: IndividualCourseComponent
+            },{
+                path: '**',
+                component: NocontentComponent
+            }
+        ])
+    ],
+    providers: [
+        AuthService,
+        HomeService,
+        MycoursesService
+    ],
+    bootstrap: [
+        AppComponent
+    ]
 })
 export class AppModule { }

@@ -1,0 +1,17 @@
+<div class="row">
+    <div class="col-lg-4 col-md-4 col-sm-4 col-12" *ngFor="let course of enrolledCourses">
+        <div class="imaged-block" (click)="openCourse(course.guCourseId)">
+            <div class="text-on-bg">
+                <div>{{course.name}}</div>
+                <img src="{{course.image+'.jpg'}}" alt="{{course.name}}">
+            </div>
+            <div class="block-disc">
+                <p>{{course.description}}</p>
+                <small><i>Progress:</i></small>
+                <div class="course-progress">
+                    <div class="progress-indecator" [ngStyle]="{'width': (course.moduleFinished / course.noOfModules)*100 +'%' }"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

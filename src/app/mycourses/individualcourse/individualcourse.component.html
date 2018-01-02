@@ -1,0 +1,28 @@
+<section *ngIf="courseDetails != null">
+    <h1>{{courseDetails.name}}</h1>
+
+    <div class="soft-block-wrap">
+        <ul>
+            <li><b>Course type:</b> {{courseDetails.type}}</li>
+            <li><b>Description:</b> {{courseDetails.description}}</li>
+            <li><b>Enrolled date:</b> {{courseDetails.createdDate}}</li>
+            <li><b>All modules:</b> {{courseDetails.noOfModules}}</li>
+            <li><b>Finished modules:</b> {{courseDetails.moduleFinished}}</li>
+
+            <li style="list-style: none;margin-top: 20px">
+                <h5>Course chapters</h5>
+                <ul>
+                    <li *ngFor="let submod of courseDetails.subModules">
+                        <a routerLink="{{'/course/'+courseDetails.name.toLowerCase()+'/'+submod.guCourseId}}">{{submod.name}}</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+
+    </div>
+</section>
+
+<section *ngIf="courseDetails == null" class="text-center">
+    <h1>No content</h1>
+    <h4>We cannot find what you are looking for. Please try again later</h4>
+</section>
