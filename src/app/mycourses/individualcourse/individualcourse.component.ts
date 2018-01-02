@@ -16,8 +16,13 @@ export class IndividualCourseComponent implements OnInit {
 
     constructor(private courses: MycoursesService, private aroute: ActivatedRoute) {
         let courseId = this.aroute.snapshot.params['course'];
-        //debugger;
         if(courseId != undefined){
+            // let course = this.courses.getCourseDet(courseId);
+            // if(course.status){
+            //     this.courseDetails = course.data;
+            // }else{
+            //     this.courseDetails = null;
+            // }
             this.courses.getCourseDet(courseId).subscribe(data=>{
                 let course = data.json();
                 this.courseDetails = course[0];

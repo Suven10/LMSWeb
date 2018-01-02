@@ -18,6 +18,7 @@ export class TopnavComponent implements OnInit {
     constructor(private courses: MycoursesService, private router: Router) { }
 
     ngOnInit() {
+        // this.allCourses =  this.courses.allCourses();
         this.courses.allCourses().subscribe(data=>{
             this.allCourses = data.json();
         });
