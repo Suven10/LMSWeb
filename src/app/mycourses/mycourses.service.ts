@@ -1,10 +1,11 @@
 import {Injectable} from "@angular/core";
-// import { Http, Response } from '@angular/http';
+import { Http, Response } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 @Injectable()
 
 export class MycoursesService {
+    http:Http;
     courses = [
         {
             "guCourseId": "D8697B6C-FAE9-B7CA-9DCD-286B730F3361",
@@ -117,7 +118,9 @@ export class MycoursesService {
         }
     ];
 
-    constructor(){}
+    constructor(http:Http){
+        this.http=http;
+    }
 
     private getCurrentCourses (uid) {
         // return this.http
@@ -151,6 +154,10 @@ export class MycoursesService {
     }
 
     private getAllCourses () {
+        // return this.http
+        //     .get('http://localhost:4200/src/data/courses.json')
+        //     .map((res:Response) => res.json());
+
         return [{
             "guCourseId": "D8697B6C-FAE9-B7CA-9DCD-286B730F3361",
             "guCatId": "C8697B6C-FAE9-B7CA-9DCD-286B730F3361",
@@ -200,6 +207,7 @@ export class MycoursesService {
             "moduleFinished":10,
             "image":"assets/course"
         }];
+
     }
 
     private getCourseDetailsById (id) {

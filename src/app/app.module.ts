@@ -12,6 +12,7 @@ import { NocontentComponent } from './nocontent/nocontent.component';
 import { AuthService } from "./auth/auth.service";
 import {HomeService} from "./home/home.service";
 import {HttpModule} from "@angular/http";
+import {HttpClientModule} from '@angular/common/http';
 import { MycoursesComponent } from './mycourses/mycourses.component';
 import {MycoursesService} from "./mycourses/mycourses.service";
 import {GroupByPipe} from "./topnav/groupby.pipe";
@@ -33,6 +34,7 @@ import { IndividualCourseComponent } from './mycourses/individualcourse/individu
         BrowserModule,
         FormsModule,
         HttpModule,
+        HttpClientModule,
         RouterModule.forRoot([
             {
                 path: '',
