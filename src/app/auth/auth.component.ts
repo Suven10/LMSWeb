@@ -106,7 +106,9 @@ export class AuthComponent implements OnInit {
         this.isAuthSuccess = this.authUser.signIn(this.profile).subscribe(data=>{
             this.isAuthSuccess=data.json();
             if(this.isAuthSuccess.status){
-                document.cookie = 'uid='+ this.isAuthSuccess.guProfileId;
+                document.cookie = 'uid='+ this.isAuthSuccess.profile[0].guProfileId;
+                document.cookie = 'isInstructor='+ this.isAuthSuccess.profile[0].isInstructor;
+                document.cookie = 'isStudent='+ this.isAuthSuccess.profile[0].isStudent;
                 this.router.navigateByUrl('/home');
                 this.showSuccess();
             }
