@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewContainerRef } from '@angular/core';
 import {AuthService} from "./auth.service";
 import { NgForm } from '@angular/forms';
 import {Router} from "@angular/router";
@@ -6,6 +6,7 @@ import {Profile} from "./auth.model";
 import {Http,Request,Response,Headers, RequestOptions} from "@angular/http";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 @Component({
     selector: 'app-auth',
     templateUrl: './auth.component.html',
@@ -36,7 +37,8 @@ export class AuthComponent implements OnInit {
         isInstructor:false
     };
 
-    constructor(private authUser: AuthService, private router: Router) {
+    constructor(private authUser: AuthService, private router: Router,public toastr:ToastsManager,vcr: ViewContainerRef) {
+        this.toastr.setRootViewContainerRef(vcr);
     };
 
     ngOnInit() {
@@ -95,12 +97,30 @@ export class AuthComponent implements OnInit {
             if(this.isAuthSuccess.status){
                 document.cookie = 'uid='+ this.isAuthSuccess.guProfileId;
                 this.router.navigateByUrl('/home');
+                this.showSuccess();
             }
             else
             {
+                this.showError();
                 return;
             }
         });
+    }
+
+    showSuccess() {
+        this.toastr.success('Welcome onboard', 'Success!',{toastLife: 5000, showCloseButton: false});
+    }
+
+    showError() {
+        this.toastr.error('Error while sign in!', 'Oops!');
+    }
+
+    showWarning() {
+        this.toastr.warning('You are being warned.', 'Alert!');
+    }
+    
+    showInfo() {
+        this.toastr.info('Just some information for you.');
     }
 
     

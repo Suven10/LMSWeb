@@ -49,3 +49,13 @@
     left: 0;
     background: #64B5F6;
 }
+
+.createnew-block
+{
+    width: 100%;
+}
+
+.coursebtn
+{
+    float: right;
+}

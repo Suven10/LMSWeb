@@ -29,4 +29,8 @@ export class MycoursesComponent implements OnInit {
         this.router.navigate(['/courses/'+courseId, {id:courseId}]);
     }
 
+    createCourse() {
+        this.router.navigateByUrl('/course');
+    }
+
 }

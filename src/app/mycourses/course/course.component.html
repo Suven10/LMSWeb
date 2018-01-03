@@ -1,0 +1,46 @@
+<section class="centered-form soft-block small-w" *ngIf="isNewCourse">
+    <h3 class="text-center">Add Course</h3>
+    <!-- <p *ngIf="isValidFormSubmitted" [ngClass] = "'success'">
+            Sign up submitted successfully.
+    </p> -->
+    <form #courseAddForm="ngForm" (ngSubmit)="createCourse(courseAddForm)">
+        <div class="form-group">
+            <input name="code" [(ngModel)]="course.code" type="text" class="form-control" aria-describedby="emailHelp" placeholder="Code" required #code="ngModel">
+            <div *ngIf="code.invalid && courseAddForm.submitted && !isValidFormSubmitted" [ngClass] = "'error'"> 
+                Code is required. 
+            </div>
+        </div>
+        <div class="form-group">
+            <input name="cname" [(ngModel)]="course.name" type="text" class="form-control" id="cname" placeholder="Name" required #cname="ngModel">
+            <div *ngIf="cname.invalid && courseAddForm.submitted && !isValidFormSubmitted" [ngClass] = "'error'"> 
+                Course name is required. 
+            </div>
+        </div>
+        <div class="form-group">
+            <input name="description" [(ngModel)]="course.desc" type="text" class="form-control" id="description" aria-describedby="" placeholder="Description" #description="ngModel">
+        </div>
+        <div>
+            <!-- <input type="file" ng2FileSelect [uploader]="uploader" multiple  /> -->
+            <input name="file" type="file" (change)="uploadFiles($event)" placeholder="Upload file" accept=".pdf,.doc,.docx,.json,.ppt">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputEmail1">Course Types</label>
+            <select name="type" [(ngModel)]="course.type" class="form-control" id="type">
+                <option>Quiz</option>
+                <option>Module</option>
+            </select>
+        </div>
+        <div class="form-group" *ngIf="course.type=='Quiz'">
+            <input name="noOfModules" [(ngModel)]="course.noOfModules" type="text" class="form-control" id="noOfModules" placeholder="No Of Modules" required #noOfModules="ngModel">
+            <div *ngIf="noOfModules.invalid && courseAddForm.submitted && !isValidFormSubmitted" [ngClass] = "'error'"> 
+                No of modules is required. 
+            </div>
+        </div>
+        <div>
+        </div>
+        <div class="text-right">
+            <button type="submit" class="btn btn-primary">Create</button>
+        </div>
+    </form>
+
+</section>

@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component,ViewContainerRef } from '@angular/core';
 import { Router } from '@angular/router';
 import {isNullOrUndefined} from "util";
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 @Component({
     selector: 'app-root',
@@ -26,10 +27,27 @@ export class AppComponent {
         return null;
     };
 
-    constructor(public router: Router){
+    constructor(public router: Router,public toastr:ToastsManager,vcr: ViewContainerRef){
         let uid = this.getCookie('uid');
+        this.toastr.setRootViewContainerRef(vcr);
         if(!isNullOrUndefined(uid)){
             router.navigateByUrl('/home');
         }
+    }
+
+    showSuccess() {
+        this.toastr.success('You are awesome!', 'Success!');
+    }
+
+    showError() {
+        this.toastr.error('This is not good!', 'Oops!');
+    }
+
+    showWarning() {
+        this.toastr.warning('You are being warned.', 'Alert!');
+    }
+    
+    showInfo() {
+        this.toastr.info('Just some information for you.');
     }
 }

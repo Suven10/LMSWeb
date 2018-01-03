@@ -13,14 +13,14 @@ import { Observable } from 'rxjs';
     styleUrls: ['./topnav.component.css']
 })
 export class TopnavComponent implements OnInit {
-    allCourses;
+    allCategories;
 
     constructor(private courses: MycoursesService, private router: Router) { }
 
     ngOnInit() {
         // this.allCourses =  this.courses.allCourses();
-        this.courses.allCourses().subscribe(data=>{
-            this.allCourses = data.json();
+        this.courses.allCategories().subscribe(data=>{
+            this.allCategories = data.json();
         });
     }
 

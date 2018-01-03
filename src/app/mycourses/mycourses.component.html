@@ -1,4 +1,11 @@
 <div class="row">
+    <div class="createnew-block">
+        <div class="coursebtn">
+            <button class="btn btn-primary" (click)="createCourse()">Create New</button>
+        </div>
+    </div>
+</div>
+<div class="row">
     <div class="col-lg-4 col-md-4 col-sm-4 col-12" *ngFor="let course of enrolledCourses">
         <div class="imaged-block" (click)="openCourse(course.guCourseId)">
             <div class="text-on-bg">
@@ -15,3 +22,4 @@
         </div>
     </div>
 </div>
+
