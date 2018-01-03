@@ -7,6 +7,8 @@ import {Http,Request,Response,Headers, RequestOptions} from "@angular/http";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import {IMyOptions, IMyInputFieldChanged} from 'angular4-datepicker/src/my-date-picker/interfaces';
+
 @Component({
     selector: 'app-auth',
     templateUrl: './auth.component.html',
@@ -29,13 +31,22 @@ export class AuthComponent implements OnInit {
         country:'',
         postalCode:'',
         type    : '',
-        dob:'',
+        dob:{ date: { year: 2018, month: 10, day: 9 } },
         gender:'',
         ssn:'',
         phone:'',
         isStudent:false,
         isInstructor:false
     };
+
+    public myDatePickerOptions: IMyOptions = {
+        // other options...
+        dateFormat: 'dd/mm/yyyy',
+      };
+    
+      // Initialized to specific date (09.10.2018).
+      //public model: any = { date: { year: 2018, month: 10, day: 9 } };
+      private selector: number = 0;
 
     constructor(private authUser: AuthService, private router: Router,public toastr:ToastsManager,vcr: ViewContainerRef) {
         this.toastr.setRootViewContainerRef(vcr);
@@ -58,7 +69,7 @@ export class AuthComponent implements OnInit {
         this.authUser.signUp(this.profile).subscribe(data=>{
             this.isAuthSuccess=data.json();
             if(this.isAuthSuccess.error=="00000"){
-                document.cookie ='uid='+ this.isAuthSuccess.guProfileId;
+                //document.cookie ='uid='+ this.isAuthSuccess.guProfileId;
                 this.router.navigate(['/auth',{"isSignUp":true}]);
             }
         });
@@ -68,7 +79,7 @@ export class AuthComponent implements OnInit {
 
     mapProfileData(authDet){
         this.profile.gender=authDet.gender;
-        this.profile.dob=authDet.dob;
+        this.profile.dob=authDet.dob.formatted;
         this.profile.address=authDet.streetAddress+','+authDet.city+','+authDet.country+','+authDet.postalCode;
         this.profile.email=authDet.email;
         this.profile.firstName=authDet.firstName;

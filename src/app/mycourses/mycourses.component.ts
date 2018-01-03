@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 // import { Http, Response } from '@angular/http';
 import {MycoursesService} from "./mycourses.service";
 import 'rxjs/add/operator/map';
-import {Router} from "@angular/router";
+import {Router, ActivatedRoute} from "@angular/router";
+import { Observable } from 'rxjs';
+
 
 @Component({
   selector: 'app-mycourses',
@@ -13,16 +15,42 @@ export class MycoursesComponent implements OnInit {
 
     allCourses;
     enrolledCourses;
-
-    constructor(private mycourses: MycoursesService, private router: Router) { }
+    categoryCourses;
+    categories;
+    isByCategory=false;
+    constructor(private mycourses: MycoursesService, private router: Router, private aroute: ActivatedRoute) { }
 
     ngOnInit() {
         // this.home.myCourses(null).subscribe(data => {
         //     this.dashCounts = data
         // });
 
-        this.allCourses = this.mycourses.allCourses();
-        this.enrolledCourses = this.mycourses.myCourses(null);
+        // this.allCourses = this.mycourses.allCourses();
+        // this.enrolledCourses = this.mycourses.myCourses(null);
+        this.mycourses.allCategories().subscribe(categoreis => {
+            this.categories = categoreis.json();
+        });
+
+        let cat = this.aroute.snapshot.params;
+        if(cat.type != undefined || cat.type != null){
+            if(cat.type == 'categoryCourses'){
+                this.isByCategory=true;
+                //debugger;
+                this.mycourses.getCategoryDet(cat.id).subscribe(course =>{
+                    this.allCourses = course.json();
+                });
+            }
+            else
+            {
+                this.mycourses.allCourses().subscribe(course =>{
+                    this.allCourses = course.json();
+                });;
+            }
+        }else{
+            this.mycourses.allCourses().subscribe(course =>{
+                this.allCourses = course.json();
+            });;
+        }
     }
 
     openCourse(courseId) {
@@ -30,7 +58,17 @@ export class MycoursesComponent implements OnInit {
     }
 
     createCourse() {
-        this.router.navigateByUrl('/course');
+        this.router.navigate(['/course', {isNewCourse:true,isNewCategory:false}]);
+    }
+
+    createCategory() {
+        this.router.navigate(['/course', {isNewCourse:false,isNewCategory:true}]);
+    }
+
+    getCourseDet(category) {
+        this.mycourses.getCategoryDet(category).subscribe(courses => {
+            this.allCourses = courses.json();
+        })
     }
 
 }

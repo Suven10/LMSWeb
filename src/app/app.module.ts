@@ -19,7 +19,7 @@ import {MycoursesService} from "./mycourses/mycourses.service";
 import {GroupByPipe} from "./topnav/groupby.pipe";
 import { IndividualCourseComponent } from './mycourses/individualcourse/individualcourse.component';
 import { CourseComponent } from './mycourses/course/course.component';
-
+import { MyDatePickerModule } from 'mydatepicker';
 
 
 @NgModule({
@@ -40,9 +40,14 @@ import { CourseComponent } from './mycourses/course/course.component';
         FormsModule,
         HttpModule,
         HttpClientModule,
+        MyDatePickerModule,
         RouterModule.forRoot([
             {
                 path: '',
+                component: AuthComponent
+            },
+            {
+                path: 'auth',
                 component: AuthComponent
             },{
                 path: 'home',
@@ -53,6 +58,9 @@ import { CourseComponent } from './mycourses/course/course.component';
             },{
                 path: 'courses/:course',
                 component: IndividualCourseComponent
+            },{
+                path: 'categourCourses/:category',
+                component: MycoursesComponent
             },{
                 path: 'course',
                 component: CourseComponent

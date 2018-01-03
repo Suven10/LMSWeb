@@ -192,6 +192,18 @@ export class MycoursesService {
         return getCategoryDet;
     }
 
+    private createCategoryData (categoryDet): Observable<Response> {
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+        return this.http.post('http://localhost:8012/Ascentic/API/src/Ascentic.CourseAPI/category', JSON.stringify(categoryDet),options);
+    }
+
+    private createCourseData (courseDet) :Observable<Response>{
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+        return this.http.post('http://localhost:8012/Ascentic/API/src/Ascentic.CourseAPI/course', JSON.stringify(courseDet),options);
+    }
+
     myCourses (id) {
         return this.getCurrentCourses(id);
     }
@@ -210,6 +222,17 @@ export class MycoursesService {
 
     allCategories () :Observable<Response> {
         return this.getAllCategories();
+    }
+
+    
+
+    createCourse (courseObj):Observable<Response> {
+        let courseRes=this.createCourseData(courseObj);
+        return courseRes;
+    }
+
+    createCategory (categoryObj) :Observable<Response>{
+        return this.createCategoryData(categoryObj);
     }
 
 }

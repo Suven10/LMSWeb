@@ -69,7 +69,8 @@
             </div>
         </div>
         <div class="form-group">
-            <input [(ngModel)]="authDetails.dob" type="text" class="form-control" id="dob" aria-describedby="emailHelp" placeholder="Date Of Birth" #dob="ngModel">
+            <!-- <input [(ngModel)]="authDetails.dob" type="text" class="form-control" id="dob" aria-describedby="emailHelp" placeholder="Date Of Birth" #dob="ngModel"> -->
+            <my-date-picker name="dob" [options]="myDatePickerOptions" [selector]="selector" [(ngModel)]="authDetails.dob" required #dob="ngModel"></my-date-picker>
         </div>
         <div class="form-group">
             <input name="streetAddr" [(ngModel)]="authDetails.streetAddress" type="text" class="form-control" id="streetAddr" placeholder="Street Address" required #streetAddr="ngModel">
