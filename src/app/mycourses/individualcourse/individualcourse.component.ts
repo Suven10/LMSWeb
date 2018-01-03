@@ -15,15 +15,15 @@ export class IndividualCourseComponent implements OnInit {
     courseDetails;
 
     constructor(private courses: MycoursesService, private aroute: ActivatedRoute) {
-        let courseId = this.aroute.snapshot.params['course'];
-        if(courseId != undefined){
+        let categoryId = this.aroute.snapshot.params['course'];
+        if(categoryId != undefined){
             // let course = this.courses.getCourseDet(courseId);
             // if(course.status){
             //     this.courseDetails = course.data;
             // }else{
             //     this.courseDetails = null;
             // }
-            this.courses.getCourseDet(courseId).subscribe(data=>{
+            this.courses.getCategoryDet(categoryId).subscribe(data=>{
                 let course = data.json();
                 this.courseDetails = course[0];
                 // if(course.status){

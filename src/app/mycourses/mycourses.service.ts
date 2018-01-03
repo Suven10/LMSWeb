@@ -185,6 +185,13 @@ export class MycoursesService {
         // return {status: false,data: null}
     }
 
+    private getCategoryDetailsById (id) :Observable<Response>{
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+        let getCategoryDet=this.http.get('http://localhost:8012/Ascentic/API/src/Ascentic.CourseAPI/category/'+id,options);
+        return getCategoryDet;
+    }
+
     myCourses (id) {
         return this.getCurrentCourses(id);
     }
@@ -195,6 +202,10 @@ export class MycoursesService {
 
     getCourseDet(id):Observable<Response> {
         return this.getCourseDetailsById(id);
+    }
+
+    getCategoryDet(id):Observable<Response> {
+        return this.getCategoryDetailsById(id);
     }
 
     allCategories () :Observable<Response> {

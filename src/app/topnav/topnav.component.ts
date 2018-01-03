@@ -24,8 +24,8 @@ export class TopnavComponent implements OnInit {
         });
     }
 
-    openCourse(courseId) {
-        this.router.navigate(['/courses/'+courseId, {id:courseId}]);
+    openCourse(categoryId) {
+        this.router.navigate(['/courses/'+categoryId, {id:categoryId}]);
     }
 
 }
