@@ -42,6 +42,7 @@ export class CourseComponent implements OnInit {
       question:'',
       selectiveAnswers:[],
       selectiveAnswer:'',
+      isAnswer:false,
       answerType:'',
       finalAnswers:[]
     }],
@@ -53,6 +54,7 @@ export class CourseComponent implements OnInit {
     question:'',
     selectiveAnswers:[],
     selectiveAnswer:'',
+    isAnswer:false,
     answerType:'',
     finalAnswers:[]
   }
@@ -67,7 +69,8 @@ export class CourseComponent implements OnInit {
   };
   
   answerObj={
-    answer:''
+    name:'',
+    isAnswer:false
   }
 
   category = {
@@ -170,6 +173,7 @@ export class CourseComponent implements OnInit {
       question:'',
       selectiveAnswers:[],
       selectiveAnswer:'',
+      isAnswer:false,
       answerType:'',
       finalAnswers:[]
     }
@@ -189,13 +193,17 @@ export class CourseComponent implements OnInit {
   }
 
   addAnswer(quiz){
-    // // debugger;
-    // this.answerObj={
-    //   answer:''
-    // }
+   // debugger;
+    this.answerObj={
+      name:'',
+      isAnswer:false
+    }
     if(quiz.selectiveAnswer!=undefined && quiz.selectiveAnswer!=""){
-      quiz.selectiveAnswers.push(quiz.selectiveAnswer);
+      this.answerObj.name=quiz.selectiveAnswer;
+      this.answerObj.isAnswer=quiz.isAnswer;
+      quiz.selectiveAnswers.push(this.answerObj);
       quiz.selectiveAnswer='';
+      quiz.isAnswer=false;
     }
     else{
       this.showWarning("Answer is empty!");

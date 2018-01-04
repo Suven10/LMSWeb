@@ -8,11 +8,12 @@ export class Question {
     answered: boolean;
 
     constructor(data: any) {
+        //debugger;
         data = data || {};
-        this.id = data.id;
-        this.name = data.name;
-        this.questionTypeId = data.questionTypeId;
+        this.id = data.guQuizId;
+        this.name = data.question;
         this.options = [];
+        data.options=JSON.parse(data.selectiveAnswers);
         data.options.forEach(o => {
             this.options.push(new Option(o));
         });

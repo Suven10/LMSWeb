@@ -3,9 +3,11 @@ import { Component, OnInit } from '@angular/core';
 
 import { QuizService } from './quiz.service';
 import { HelperService } from '../helper.service';
+import {MycoursesService} from "../mycourses/mycourses.service";
 import { Question } from './models/question';
 import { QuizConfig } from './models/quiz-config';
 import { Quiz } from './models/quiz';
+import {Router, ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-quiz',
@@ -14,6 +16,7 @@ import { Quiz } from './models/quiz';
 })
 export class QuizComponent implements OnInit {
   quizes: any[];
+  courseDetails;
   quiz: Quiz = new Quiz(null);
   mode = 'quiz';
   quizName: string;
@@ -38,20 +41,36 @@ export class QuizComponent implements OnInit {
     count: 1
   };
 
-  constructor(private quizService: QuizService) { }
+  constructor(private router:Router,private quizService: QuizService,private courses:MycoursesService,private aroute:ActivatedRoute) { }
 
   ngOnInit() {
-    debugger;
+    //debugger;
     this.quizes = this.quizService.getAll();
     this.quizName = this.quizes[0].id;
     this.loadQuiz(this.quizName);
   }
 
   loadQuiz(quizName: string) {
-    this.quizService.get(quizName).subscribe(res => {
-      this.quiz = new Quiz(res);
-      this.pager.count = this.quiz.questions.length;
-    });
+    // this.quizService.get(quizName).subscribe(res => {
+    //   this.quiz = new Quiz(res);
+    //   this.pager.count = this.quiz.questions.length;
+    // });
+    let courseId = this.aroute.snapshot.params['course'];
+    if(courseId != undefined){
+        // let course = this.courses.getCourseDet(courseId);
+        // if(course.status){
+        //     this.courseDetails = course.data;
+        // }else{
+        //     this.courseDetails = null;
+        // }
+        this.courses.getCourseDet(courseId).subscribe(data=>{
+          let quizData = data.json();
+          this.quiz=new Quiz(quizData[0]);
+          this.pager.count = this.quiz.questions.length;
+           
+            // this.courseDetails = course[0];
+        });
+    }
     this.mode = 'quiz';
   }
 
@@ -78,14 +97,16 @@ export class QuizComponent implements OnInit {
   }
 
   isAnswered(question: Question) {
+    debugger;
     return question.options.find(x => x.selected) ? 'Answered' : 'Not Answered';
   };
 
   isCorrect(question: Question) {
-    return question.options.every(x => x.selected === x.isAnswer) ? 'correct' : 'wrong';
+    return question.options.find(x => x.selected === x.isAnswer) ? 'correct' : 'wrong';
   };
 
   onSubmit() {
+    debugger;
     let answers = [];
     this.quiz.questions.forEach(x => answers.push({ 'quizId': this.quiz.id, 'questionId': x.id, 'answered': x.answered }));
 

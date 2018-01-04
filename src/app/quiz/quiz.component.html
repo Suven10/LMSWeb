@@ -1,10 +1,4 @@
 <div class="row">
-  <div class="col-md-6 text-sm-right">
-    Select Quiz:
-    <select [(ngModel)]="quizName" (change)="loadQuiz(quizName)">
-        <option *ngFor="let quiz of quizes" [value]="quiz.id">{{quiz.name}}</option>
-      </select>
-  </div>
 </div>
 <div id="quiz">
   <h1 class="text-sm-center">{{quiz.name}}</h1>

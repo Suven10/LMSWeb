@@ -37,10 +37,11 @@ export class IndividualCourseComponent implements OnInit {
             // }
             this.courses.getCourseDet(courseId).subscribe(data=>{
                 let course = data.json();
+                // debugger;
                 this.courseDetails = course[0];
-                if(this.courseDetails.type=="Quiz"){
-                    this.router.navigate(['/quiz/'+courseId]);
-                }
+                // if(this.courseDetails.type=="Quiz"){
+                //     this.router.navigate(['/quiz/'+courseId]);
+                // }
             });
         }
     }

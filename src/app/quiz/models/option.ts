@@ -6,9 +6,8 @@ export class Option {
     selected: boolean;
 
     constructor(data: any) {
+        //debugger;
         data = data || {};
-        this.id = data.id;
-        this.questionId = data.questionId;
         this.name = data.name;
         this.isAnswer = data.isAnswer;
     }

@@ -67,27 +67,28 @@
                     <!-- <div *ngIf="quiz.{{index}}.invalid && courseAddForm.submitted && !isValidFormSubmitted" [ngClass] = "'error'"> 
                         Question is required. 
                     </div> -->
-                    <label for="answerTypeLabel">Answer Type</label>
+                    <!-- <label for="answerTypeLabel">Answer Type</label>
                     <select name="answerType" [(ngModel)]="quiz.answerType" class="form-control" id="answerType">
                         <option>Single</option>
                         <option>Multiple</option>
-                    </select>
-                    <label for="selectAnswers">Answers</label>
+                    </select> -->
+                    <label for="selectAnswers">Options</label>
                     <input name="ansIndex" [(ngModel)]="quiz.selectiveAnswer" type="text" class="form-control" id="ansIndex" placeholder="Answer" required #ansIndex="ngModel">
-                    <a name="ansIndex" class="btn btn-primary a-color" (click)="addAnswer(quiz)">Add</a>
+                    <input type="checkbox" name="isAnswer" [(ngModel)]="quiz.isAnswer"><span class="span-block">Correct Answer</span>
+                    <a name="ansIndex" class="btn btn-primary a-color" (click)="addAnswer(quiz)">Save</a>
                     <div *ngFor="let answerObj of quiz.selectiveAnswers">
-                            <label>{{answerObj}}</label>
+                            <label>{{answerObj.name}}</label>
                         </div>
-                    <label for="finalAnswers">Correct Answers</label>
+                    <!-- <label for="finalAnswers">Correct Answers</label>
                     <select class="form-control" (change)="addCorrectAnswer(quiz,$event.target.value)">
                         <option value="Select" >Select</option>
                         <option value="{{answerObj}}" *ngFor="let answerObj of quiz.selectiveAnswers">{{answerObj}}</option>
-                    </select>
+                    </select> -->
                     <!-- <div class="row" >
                             <input flex="70" name="answerObj.key" [(ngModel)]="answerObj.answer" type="text" class="form-control" id="answerObj.key" placeholder="Answer" required #{{answerObj.key}}="ngModel">
                             <button flex="30" class="btn btn-primary" (click)="addAnswer(answerObj)">Add</button>
                     </div> -->
-                    <a flex="30" class="btn btn-primary a-color" (click)="addQuiz()">Add</a>
+                    <a flex="30" class="btn btn-primary a-color" (click)="addQuiz()">Add New</a>
                 </div>
             </fieldset>
         </div>
