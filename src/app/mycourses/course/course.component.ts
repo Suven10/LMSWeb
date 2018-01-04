@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { TopnavComponent } from '../../topnav/topnav.component';
 // import { FileUploader } from 'ng2-file-upload/ng2-file-upload';
+// import {Ng2ListViewCRUDProperty} from "ng2-listview-crud";
 
 @Component({
   selector: 'app-course',
@@ -21,15 +22,52 @@ export class CourseComponent implements OnInit {
   isNewCategory=true;
   isValidFormSubmitted=false;
   categoryRes;
+  courseRes;
+  allCategories;
   course = {
     code   : '',
     name   : '',
     guCatId   : '',
-    type    : '',
+    type    : 'Quiz',
     noOfModules:0,
-    subModules:[],
+    subModules:[{
+      code:'',
+      name:'',
+      desc:'',
+      chapterPath:Event,
+      filePath:'',
+      noOfModules:''
+    }],
+    quizzes:[{
+      question:'',
+      selectiveAnswers:[],
+      selectiveAnswer:'',
+      answerType:'',
+      finalAnswers:[]
+    }],
     filePath:'',
-    desc:''
+    desc:'',
+    imgPath:'assets/course'
+  }
+  quiz={
+    question:'',
+    selectiveAnswers:[],
+    selectiveAnswer:'',
+    answerType:'',
+    finalAnswers:[]
+  }
+
+  media={
+    code:'',
+    name:'',
+    desc:'',
+    chapterPath:Event,
+    filePath:'',
+    noOfModules:''
+  };
+  
+  answerObj={
+    answer:''
   }
 
   category = {
@@ -46,6 +84,10 @@ export class CourseComponent implements OnInit {
     let courseParams = this.aroute.snapshot.params;
     this.isNewCourse=(courseParams.isNewCourse=="true")?true:false;
     this.isNewCategory=(courseParams.isNewCategory=="true")?true:false;
+
+    this.mycourse.allCategories().subscribe(data=>{
+      this.allCategories = data.json();
+    });
   }
   
 
@@ -55,6 +97,23 @@ export class CourseComponent implements OnInit {
      if(form.invalid){
         return;	
      }
+     
+     this.course.noOfModules=this.course.subModules.length;
+     this.mycourse.createCourse(this.course).subscribe(data=>
+      {
+        debugger;
+        this.courseRes=data.json();
+        if(this.courseRes.error=="00000"){
+          this.showSuccess("Course created successfully!");
+          form.reset();
+          this.isValidFormSubmitted=true;
+          //this.topnav.reloadCategories();
+        }
+        else{
+          this.showError("Error while adding course!");
+          //form.reset();
+        }
+      });
   }
 
   createCategory(form: NgForm) {
@@ -79,11 +138,23 @@ export class CourseComponent implements OnInit {
       });
   }
 
-  uploadFiles(event) {
+  addFiles(event,chapter) {
   //debugger;
-   this.commonService.uploadFileData(event).subscribe(data=>{
+    chapter.chapterPath=event;
+  }
+
+  uploadFiles(chapter) {
+    debugger;
+    let event=chapter.chapterPath;
+    this.commonService.uploadFileData(event,chapter.code).subscribe(data=>{
       let res=data.json();
-   }); 
+      let fileUrl='';
+      if(res.status){
+         fileUrl=res.fileUrl;
+      }
+      chapter.filePath=fileUrl;
+      chapter.noOfModules=1;
+    }); 
   }
 
   resetCategory(){
@@ -94,6 +165,47 @@ export class CourseComponent implements OnInit {
     }
   }
 
+  addQuiz(){
+    this.quiz={
+      question:'',
+      selectiveAnswers:[],
+      selectiveAnswer:'',
+      answerType:'',
+      finalAnswers:[]
+    }
+    this.course.quizzes.push(this.quiz);
+  }
+
+  addMedia(){
+    this.media={
+      code:'',
+      name:'',
+      desc:'',
+      chapterPath:Event,
+      filePath:'',
+      noOfModules:''
+    }
+    this.course.subModules.push(this.media);
+  }
+
+  addAnswer(quiz){
+    // // debugger;
+    // this.answerObj={
+    //   answer:''
+    // }
+    if(quiz.selectiveAnswer!=undefined && quiz.selectiveAnswer!=""){
+      quiz.selectiveAnswers.push(quiz.selectiveAnswer);
+      quiz.selectiveAnswer='';
+    }
+    else{
+      this.showWarning("Answer is empty!");
+    }
+  }
+
+  addCorrectAnswer(quiz,value){
+    quiz.finalAnswers.push(value);
+  }
+
   showSuccess(message) {
     this.toastr.success(message, 'Success!',{toastLife: 5000, showCloseButton: false});
   }
@@ -102,25 +214,25 @@ export class CourseComponent implements OnInit {
       this.toastr.error(message, 'Oops!',{toastLife: 5000, showCloseButton: true});
   }
 
-  showWarning() {
-      this.toastr.warning('You are being warned.', 'Alert!');
+  showWarning(message) {
+      this.toastr.warning(message, 'Alert!');
   }
 
   showInfo() {
       this.toastr.info('Just some information for you.');
   }
 
-//  public uploader:FileUploader = new FileUploader({url: 'http://localhost:8012/Ascentic/Courses/'});
-//  public hasBaseDropZoneOver:boolean = false;
-//  public hasAnotherDropZoneOver:boolean = false;
+  trackByIndex(index: number, obj: any): any {
+    return index;
+  }
 
-//  public fileOverBase(e:any):void {
-//    this.hasBaseDropZoneOver = e;
-//  }
+  selectCat(value){
+    this.course.guCatId=value;
+    //debugger;
+  }
 
-//  public fileOverAnother(e:any):void {
-//    this.hasAnotherDropZoneOver = e;
-//  }
+
+  
 
 
 

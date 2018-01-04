@@ -1,5 +1,11 @@
 <section *ngIf="courseDetails != null">
-    <h1>{{courseDetails.name}}</h1>
+    <div class="row">
+        <div flex="70">
+                <h1>{{courseDetails.name}}</h1>
+        </div>
+        <div flex="30" class="enroll-btn"><button class="btn btn-primary" (click)="enrollCourse()" [disabled]="isEnrolled">Enroll</button></div>
+    </div>
+    
 
     <div class="soft-block-wrap">
         <ul>
@@ -18,7 +24,6 @@
                 </ul>
             </li>
         </ul>
-
     </div>
 </section>
 

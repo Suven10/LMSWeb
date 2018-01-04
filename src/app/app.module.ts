@@ -20,6 +20,7 @@ import {GroupByPipe} from "./topnav/groupby.pipe";
 import { IndividualCourseComponent } from './mycourses/individualcourse/individualcourse.component';
 import { CourseComponent } from './mycourses/course/course.component';
 import { MyDatePickerModule } from 'mydatepicker';
+// import {Ng2ListViewCRUD} from "ng2-listview-crud";
 
 
 @NgModule({

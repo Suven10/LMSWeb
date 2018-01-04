@@ -204,6 +204,12 @@ export class MycoursesService {
         return this.http.post('http://localhost:8012/Ascentic/API/src/Ascentic.CourseAPI/course', JSON.stringify(courseDet),options);
     }
 
+    private subscribeCourseData (courseDet): Observable<Response> {
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+        return this.http.post('http://localhost:8012/Ascentic/API/src/Ascentic.SubscriptionAPI/subscription', JSON.stringify(courseDet),options);
+    }
+
     myCourses (id) {
         return this.getCurrentCourses(id);
     }
@@ -233,6 +239,10 @@ export class MycoursesService {
 
     createCategory (categoryObj) :Observable<Response>{
         return this.createCategoryData(categoryObj);
+    }
+
+    subscribeCourse(courseDet):Observable<Response>{
+        return this.subscribeCourseData(courseDet);
     }
 
 }
