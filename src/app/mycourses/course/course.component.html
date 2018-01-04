@@ -73,7 +73,7 @@
                         <option>Multiple</option>
                     </select> -->
                     <label for="selectAnswers">Options</label>
-                    <input name="ansIndex" [(ngModel)]="quiz.selectiveAnswer" type="text" class="form-control" id="ansIndex" placeholder="Answer" required #ansIndex="ngModel">
+                    <input name="ansIndex" [(ngModel)]="quiz.selectiveAnswer" type="text" class="form-control" id="ansIndex" placeholder="Answer" #ansIndex="ngModel">
                     <input type="checkbox" name="isAnswer" [(ngModel)]="quiz.isAnswer"><span class="span-block">Correct Answer</span>
                     <a name="ansIndex" class="btn btn-primary a-color" (click)="addAnswer(quiz)">Save</a>
                     <div *ngFor="let answerObj of quiz.selectiveAnswers">
