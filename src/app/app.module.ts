@@ -20,6 +20,8 @@ import {GroupByPipe} from "./topnav/groupby.pipe";
 import { IndividualCourseComponent } from './mycourses/individualcourse/individualcourse.component';
 import { CourseComponent } from './mycourses/course/course.component';
 import { MyDatePickerModule } from 'mydatepicker';
+import { QuizComponent } from './quiz/quiz.component';
+import {QuizService} from "./quiz/quiz.service";
 // import {Ng2ListViewCRUD} from "ng2-listview-crud";
 
 
@@ -33,7 +35,8 @@ import { MyDatePickerModule } from 'mydatepicker';
         MycoursesComponent,
         GroupByPipe,
         IndividualCourseComponent,
-        CourseComponent
+        CourseComponent,
+        QuizComponent
     ],
     imports: [
         BrowserModule,
@@ -46,8 +49,7 @@ import { MyDatePickerModule } from 'mydatepicker';
             {
                 path: '',
                 component: AuthComponent
-            },
-            {
+            },{
                 path: 'auth',
                 component: AuthComponent
             },{
@@ -66,6 +68,9 @@ import { MyDatePickerModule } from 'mydatepicker';
                 path: 'course',
                 component: CourseComponent
             },{
+                path: 'quiz/:course',
+                component: QuizComponent
+            },{
                 path: '**',
                 component: NocontentComponent
             }
@@ -76,7 +81,8 @@ import { MyDatePickerModule } from 'mydatepicker';
         AuthService,
         HomeService,
         MycoursesService,
-        CommonService
+        CommonService,
+        QuizService
     ],
     bootstrap: [
         AppComponent

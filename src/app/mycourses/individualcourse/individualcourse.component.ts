@@ -26,7 +26,7 @@ export class IndividualCourseComponent implements OnInit {
         desc: string
     }
 
-    constructor(private courses: MycoursesService, private aroute: ActivatedRoute,private toastr:ToastsManager,private common:CommonService) {
+    constructor(private courses: MycoursesService, private aroute: ActivatedRoute,private toastr:ToastsManager,private common:CommonService,private router:Router) {
         let courseId = this.aroute.snapshot.params['course'];
         if(courseId != undefined){
             // let course = this.courses.getCourseDet(courseId);
@@ -38,11 +38,9 @@ export class IndividualCourseComponent implements OnInit {
             this.courses.getCourseDet(courseId).subscribe(data=>{
                 let course = data.json();
                 this.courseDetails = course[0];
-                // if(course.status){
-                //     this.courseDetails = course.data;
-                // }else{
-                //     this.courseDetails = null;
-                // }
+                if(this.courseDetails.type=="Quiz"){
+                    this.router.navigate(['/quiz/'+courseId]);
+                }
             });
         }
     }
