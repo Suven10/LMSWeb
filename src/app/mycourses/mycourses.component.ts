@@ -20,12 +20,15 @@ export class MycoursesComponent implements OnInit {
     categories;
     isByCategory=false;
     accountId;
+    isInstructor:boolean;
+    isStudent:boolean;
     showBtn:boolean;
     constructor(private mycourses: MycoursesService, private router: Router, private aroute: ActivatedRoute,private common:CommonService) { }
 
     ngOnInit() {
         this.accountId=this.common.readCookieData("uid");
-        
+        this.isInstructor=(this.common.readCookieData("isInstructor")=="0")?false:true;
+        this.isStudent=(this.common.readCookieData("isStudent")=="0")?false:true;
         this.mycourses.allCategories().subscribe(categoreis => {
             this.categories = categoreis.json();
         });

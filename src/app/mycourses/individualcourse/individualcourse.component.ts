@@ -22,6 +22,9 @@ export class IndividualCourseComponent implements OnInit {
     enrollRes;
     isEnrolled=false;
     accountId:string;
+    isInstructor:boolean;
+    isStudent:boolean;
+    isShowSubscribe:boolean;
     subscription:{
         guProfileId:string,
         guCourseId: string,
@@ -30,8 +33,10 @@ export class IndividualCourseComponent implements OnInit {
     }
 
     constructor(private courses: MycoursesService, private aroute: ActivatedRoute,private toastr:ToastsManager,private common:CommonService,private router:Router,private chdet:ChangeDetectorRef) {
-        //debugger;
+        // debugger;
         this.accountId=this.common.readCookieData("uid");
+        this.isInstructor=(this.common.readCookieData("isInstructor")=="0")?false:true;
+        this.isStudent=(this.common.readCookieData("isStudent")=="0")?false:true;
         if(this.accountId==undefined || this.accountId=="")
         {
             this.router.navigateByUrl('/auth');

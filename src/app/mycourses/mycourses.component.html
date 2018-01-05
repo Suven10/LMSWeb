@@ -9,13 +9,13 @@
                 <option value="{{cat.guCatId}}" *ngFor="let cat of categories">{{cat.name}}</option>
             </select>
         </div>
-       <div class="form-group">
+       <div class="form-group" *ngIf="isStudent">
             <button class="btn btn-primary" (click)="createCourse()">Create Course</button>
             <button class="btn btn-primary" (click)="createCategory()">Create Category</button>
         </div>
     </div>
     <div class="form-group">
-        <div class="clearfix createnew-block" *ngIf="hideCat && isByCategory && showBtn"> 
+        <div class="clearfix createnew-block" *ngIf="hideCat && isByCategory && showBtn && isStudent"> 
             <button class="btn btn-primary" (click)="createCourse()">Create Course</button>
             <button class="btn btn-primary" (click)="createCategory()">Create Category</button>
         </div>

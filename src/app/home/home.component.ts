@@ -16,12 +16,15 @@ export class HomeComponent implements OnInit {
     finishedCoursesCount:number = 0;
     totCount:number=0;
     accountId:'';
+    isInstructor:boolean;
+    isStudent:boolean;
     constructor(private router:Router,private home: HomeService, private mycoursesService: MycoursesService,private common:CommonService) { }
 
     ngOnInit() {
         //debugger;
         this.accountId=this.common.readCookieData("uid");
-        
+        this.isInstructor=(this.common.readCookieData("isInstructor")=="0")?false:true;
+        this.isStudent=(this.common.readCookieData("isStudent")=="0")?false:true;
         this.mycoursesService.getEnrolledCourse(this.accountId).subscribe(data=>{
             this.enrolledRes=data.json();
             // debugger;
