@@ -11,26 +11,33 @@ import {Router, ActivatedRoute} from "@angular/router";
 })
 export class HomeComponent implements OnInit {
     enrolledCourses;
+    coursesEnrolled=0;
     enrolledRes;
     finishedCoursesCount:number = 0;
+    totCount:number=0;
     accountId:'';
     constructor(private router:Router,private home: HomeService, private mycoursesService: MycoursesService,private common:CommonService) { }
 
     ngOnInit() {
+        //debugger;
         this.accountId=this.common.readCookieData("uid");
-        if(this.accountId==undefined || this.accountId=="")
-        {
-            this.router.navigateByUrl('/auth');
-        }
-        this.enrolledCourses = this.mycoursesService.getEnrolledCourse(this.accountId).subscribe(data=>{
-            this.enrolledRes=data.json()[0];
+        
+        this.mycoursesService.getEnrolledCourse(this.accountId).subscribe(data=>{
+            this.enrolledRes=data.json();
             // debugger;
             if(this.enrolledRes.error=="00000"){
-                this.enrolledCourses=this.enrolledRes.CourseDetails;
-                this.enrolledCourses.forEach(course => {
-                    if(course.noOfModules == this.enrolledRes.coveredModules){
-                        this.finishedCoursesCount ++;
-                    }
+                this.enrolledRes.result.forEach(courseDet => {
+                    this.enrolledCourses=courseDet.CourseDetails;
+                    this.enrolledCourses.forEach(course => {
+                        if(course.noOfModules == courseDet.coveredModules){
+                            this.finishedCoursesCount ++;
+                        }
+                    });
+                });
+                this.coursesEnrolled=this.enrolledRes.result.length;
+                this.mycoursesService.allCourses().subscribe(course =>{
+                    let allCourses = course.json();
+                    this.totCount=allCourses.length;
                 });
             }
         });

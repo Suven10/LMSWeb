@@ -1,4 +1,4 @@
-import {Component, OnInit, Injectable} from '@angular/core';
+import {Component, OnInit, Injectable,ChangeDetectorRef} from '@angular/core';
 import {MycoursesService} from "../mycourses.service";
 import {Router, ActivatedRoute} from "@angular/router";
 import {Http,Request,Response,Headers, RequestOptions} from "@angular/http";
@@ -16,8 +16,9 @@ import {CommonService} from "../../common.service";
 @Injectable()
 export class IndividualCourseComponent implements OnInit {
     courseDetails;
-    enrolledCourses;
+    enrolledCourses=[];
     enrolledRes;
+    enrolledResult;
     enrollRes;
     isEnrolled=false;
     accountId:string;
@@ -28,16 +29,25 @@ export class IndividualCourseComponent implements OnInit {
         desc: string
     }
 
-    constructor(private courses: MycoursesService, private aroute: ActivatedRoute,private toastr:ToastsManager,private common:CommonService,private router:Router) {
+    constructor(private courses: MycoursesService, private aroute: ActivatedRoute,private toastr:ToastsManager,private common:CommonService,private router:Router,private chdet:ChangeDetectorRef) {
         //debugger;
         this.accountId=this.common.readCookieData("uid");
+        if(this.accountId==undefined || this.accountId=="")
+        {
+            this.router.navigateByUrl('/auth');
+        }
         let courseId = this.aroute.snapshot.params['course'];
         if(courseId != undefined){
-            this.enrolledCourses = this.courses.getEnrolledCourse(this.accountId).subscribe(data=>{
-                this.enrolledRes=data.json()[0];
+
+            this.courses.getEnrolledCourse(this.accountId).subscribe(data=>{
+                this.enrolledRes=data.json();
                 // debugger;
                 if(this.enrolledRes.error=="00000"){
-                    this.enrolledCourses=this.enrolledRes.CourseDetails;
+                    this.enrolledResult=this.enrolledRes.result;
+                    this.enrolledResult.forEach(courseDet => {
+                        courseDet.CourseDetails[0].moduleFinished=0;
+                      this.enrolledCourses.push(courseDet.CourseDetails[0]);
+                    });
                     this.isEnrolled=this.enrolledCourses.find(x=>x.guCourseId==courseId)?false:true;
                 }
             });
@@ -45,6 +55,7 @@ export class IndividualCourseComponent implements OnInit {
             this.courses.getCourseDet(courseId).subscribe(data=>{
                 let course = data.json();
                 this.courseDetails = course[0];
+                this.courseDetails.moduleFinished=0;
             });
         }
     }

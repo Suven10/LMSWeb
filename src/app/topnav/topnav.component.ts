@@ -8,18 +8,18 @@ import {Http,Request,Response,Headers, RequestOptions} from "@angular/http";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {Router, ActivatedRoute} from "@angular/router";
 import { Observable } from 'rxjs';
+import {AuthService} from "../auth/auth.service"
 
 @Component({
     selector: 'app-topnav',
     templateUrl: './topnav.component.html',
-    styleUrls: ['./topnav.component.css'],
-    providers:[AuthComponent]
+    styleUrls: ['./topnav.component.css']
 })
 export class TopnavComponent implements OnInit {
     allCategories;
     accountId;
-    hideCourse;
-    constructor(private common:CommonService,private courses: MycoursesService, private router: Router,private auth:AuthComponent) { }
+    hideCourse=false;
+    constructor(private common:CommonService,private courses: MycoursesService, private router: Router,private auth:AuthService) { }
 
     ngOnInit() {
         // this.allCourses =  this.courses.allCourses();
@@ -48,7 +48,14 @@ export class TopnavComponent implements OnInit {
     }
 
     signOut(){
-        this.auth.callSignOut();
+        this.hideCourse=this.auth.signOut();
+        this.router.navigateByUrl('/auth');
+    }
+
+    changeState(){
+        //this.hideCourse=!this.hideCourse;
+        //this.ngOnInit();
+        //debugger;
     }
 
 }

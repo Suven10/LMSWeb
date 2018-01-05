@@ -1,3 +1,4 @@
+import { TopnavComponent } from './../topnav/topnav.component';
 import { Component, OnInit,ViewContainerRef } from '@angular/core';
 import {AuthService} from "./auth.service";
 import { NgForm } from '@angular/forms';
@@ -12,7 +13,8 @@ import {IMyOptions, IMyInputFieldChanged} from 'angular4-datepicker/src/my-date-
 @Component({
     selector: 'app-auth',
     templateUrl: './auth.component.html',
-    styleUrls: ['./auth.component.css']
+    styleUrls: ['./auth.component.css'],
+    providers:[TopnavComponent]
 })
 export class AuthComponent implements OnInit {
     isNewUser = false;
@@ -48,7 +50,7 @@ export class AuthComponent implements OnInit {
       //public model: any = { date: { year: 2018, month: 10, day: 9 } };
       private selector: number = 0;
 
-    constructor(private authUser: AuthService, private router: Router,public toastr:ToastsManager,vcr: ViewContainerRef) {
+    constructor(private authUser: AuthService, private router: Router,public toastr:ToastsManager,vcr: ViewContainerRef,public topnav:TopnavComponent) {
         this.toastr.setRootViewContainerRef(vcr);
     };
 
@@ -109,6 +111,7 @@ export class AuthComponent implements OnInit {
                 document.cookie = 'uid='+ this.isAuthSuccess.profile[0].guProfileId;
                 document.cookie = 'isInstructor='+ this.isAuthSuccess.profile[0].isInstructor;
                 document.cookie = 'isStudent='+ this.isAuthSuccess.profile[0].isStudent;
+                this.topnav.changeState();
                 this.router.navigateByUrl('/home');
                 this.showSuccess();
             }
@@ -120,12 +123,7 @@ export class AuthComponent implements OnInit {
         });
     }
 
-    callSignOut() {
-        document.cookie = 'uid' + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-        document.cookie = 'isInstructor' + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-        document.cookie = 'isStudent' + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-        this.router.navigateByUrl('/auth');
-    }
+    
 
     showSuccess() {
         this.toastr.success('Welcome onboard', 'Success!',{toastLife: 5000, showCloseButton: false});

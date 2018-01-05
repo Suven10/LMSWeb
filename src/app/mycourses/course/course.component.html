@@ -1,5 +1,5 @@
 <section class="centered-form soft-block small-w" *ngIf="isNewCourse">
-    <h3 class="text-center">Add Course</h3>
+    <h3 class="text-center">Create Course</h3>
     <!-- <p *ngIf="isValidFormSubmitted" [ngClass] = "'success'">
             Sign up submitted successfully.
     </p> -->
@@ -38,61 +38,59 @@
         <div class="form-group" *ngIf="course.type=='Multimedia'">
             <fieldset>
                 <h5>Chapters</h5>
-                <div *ngFor="let chapter of course.subModules; let index=index;">
-                    <input name="chapterCode.{{index}}" [(ngModel)]="chapter.code" type="text" class="form-control" aria-describedby="emailHelp" placeholder="Chapter Code" required #chapterCode="ngModel">
-                    <div *ngIf="chapterCode.invalid &&  !isValidFormSubmitted" [ngClass] = "'error'"> 
-                        Chapter Code is required. 
+                <div *ngFor="let chapter of course.subModules; let index=index;" class="new-course-quize">
+                    <div class="form-group">
+                        <input name="chapterCode.{{index}}" [(ngModel)]="chapter.code" type="text" class="form-control" aria-describedby="emailHelp" placeholder="Chapter Code" required #chapterCode="ngModel">
+                        <!-- <div *ngIf="chapterCode.invalid &&  !isValidFormSubmitted" [ngClass] = "'error'"> 
+                            Chapter Code is required. 
+                        </div> -->
                     </div>
 
-                    <input name="chapterName.{{index}}" [(ngModel)]="chapter.name" type="text" class="form-control" aria-describedby="emailHelp" placeholder="Chapter Name" required #chapterName="ngModel">
-                    <div *ngIf="chapterName.invalid &&  !isValidFormSubmitted" [ngClass] = "'error'"> 
-                        Chapter Name is required. 
+                    <div class="form-group">
+                        <input name="chapterName.{{index}}" [(ngModel)]="chapter.name" type="text" class="form-control" aria-describedby="emailHelp" placeholder="Chapter Name" required #chapterName="ngModel">
+                        <!-- <div *ngIf="chapterName.invalid &&  !isValidFormSubmitted" [ngClass] = "'error'"> 
+                            Chapter Name is required. 
+                        </div> -->
                     </div>
-                    <input name="chapterDesc.{{index}}" [(ngModel)]="chapter.desc" type="text" class="form-control" aria-describedby="emailHelp" placeholder="Chapter Description"  #chapterDesc="ngModel">
-                    <div *ngIf="chapterDesc.invalid &&  !isValidFormSubmitted" [ngClass] = "'error'"> 
-                        Chapter Description is required. 
+
+                    <div class="form-group">
+                        <input name="chapterDesc.{{index}}" [(ngModel)]="chapter.desc" type="text" class="form-control" aria-describedby="emailHelp" placeholder="Chapter Description"  #chapterDesc="ngModel">
+                        <!-- <div *ngIf="chapterDesc.invalid &&  !isValidFormSubmitted" [ngClass] = "'error'"> 
+                            Chapter Description is required. 
+                        </div> -->
+                        <!-- <input type="file" ng2FileSelect [uploader]="uploader" multiple  /> -->
                     </div>
-                    <!-- <input type="file" ng2FileSelect [uploader]="uploader" multiple  /> -->
-                    <input name="chapterPath" type="file" (change)="addFiles($event,chapter)" placeholder="Upload file" accept=".pdf,.doc,.docx,.json,.ppt">
-                    <a flex="30" class="btn btn-primary a-color" (click)="uploadFiles(chapter)">Upload</a>
-                    <a flex="30" class="btn btn-primary a-color" (click)="addMedia()">Add</a>
+                    <input name="chapterPath" type="file" (change)="addFiles($event,chapter)" placeholder="Upload file" accept=".pdf">
+                    <a flex="30" class="btn btn-secondary a-color" (click)="uploadFiles(chapter)">Upload</a>
+                </div>
+                <div class="text-right">
+                    <a flex="30" class="btn btn-secondary a-color" (click)="addMedia()">Add more</a>
                 </div>
             </fieldset>
         </div>
         <div class="form-group" *ngIf="course.type=='Quiz'">
             <fieldset>
                 <h5>Quizes</h5>
-                <div *ngFor="let quiz of course.quizzes; let index=index;">
+                <div *ngFor="let quiz of course.quizzes; let index=index;" class="new-course-quize">
                     <input name="quiz.{{index}}" [(ngModel)]="quiz.question" type="text" class="form-control" id="quizIndex" placeholder="Question" required>
-                    <!-- <div *ngIf="quiz.{{index}}.invalid && courseAddForm.submitted && !isValidFormSubmitted" [ngClass] = "'error'"> 
-                        Question is required. 
-                    </div> -->
-                    <!-- <label for="answerTypeLabel">Answer Type</label>
-                    <select name="answerType" [(ngModel)]="quiz.answerType" class="form-control" id="answerType">
-                        <option>Single</option>
-                        <option>Multiple</option>
-                    </select> -->
-                    <label for="selectAnswers">Options</label>
-                    <input name="ansIndex" [(ngModel)]="quiz.selectiveAnswer" type="text" class="form-control" id="ansIndex" placeholder="Answer" #ansIndex="ngModel">
-                    <input type="checkbox" name="isAnswer" [(ngModel)]="quiz.isAnswer"><span class="span-block">Correct Answer</span>
-                    <a name="ansIndex" class="btn btn-primary a-color" (click)="addAnswer(quiz)">Save</a>
-                    <div *ngFor="let answerObj of quiz.selectiveAnswers">
-                            <label>{{answerObj.name}}</label>
-                        </div>
-                    <!-- <label for="finalAnswers">Correct Answers</label>
-                    <select class="form-control" (change)="addCorrectAnswer(quiz,$event.target.value)">
-                        <option value="Select" >Select</option>
-                        <option value="{{answerObj}}" *ngFor="let answerObj of quiz.selectiveAnswers">{{answerObj}}</option>
-                    </select> -->
-                    <!-- <div class="row" >
-                            <input flex="70" name="answerObj.key" [(ngModel)]="answerObj.answer" type="text" class="form-control" id="answerObj.key" placeholder="Answer" required #{{answerObj.key}}="ngModel">
-                            <button flex="30" class="btn btn-primary" (click)="addAnswer(answerObj)">Add</button>
-                    </div> -->
-                    <a flex="30" class="btn btn-primary a-color" (click)="addQuiz()">Add New</a>
+                    <div class="field-group-heading"><label for="selectAnswers">Options</label></div>
+                    <div class="control-input">
+                        <input name="ansIndex" [(ngModel)]="quiz.selectiveAnswer" type="text" class="form-control" id="ansIndex" placeholder="Answer" #ansIndex="ngModel">
+                        <a name="ansIndex" class="btn btn-secondary a-color" (click)="addAnswer(quiz)">Add</a>
+                    </div>
+                    <div class="input-check">
+                        <input type="checkbox" name="isAnswer" [(ngModel)]="quiz.isAnswer"><span class="span-block">Correct Answer</span>
+                    </div>
+                    
+                    <div class="field-group-heading"><label for="selectAnswers">Added options</label></div>
+                    <ul *ngFor="let answerObj of quiz.selectiveAnswers">
+                        <li>{{answerObj.name}}</li>
+                    </ul>
+                </div>
+                <div class="text-right">
+                    <a flex="30" class="btn btn-secondary a-color" (click)="addQuiz()">Add more</a>
                 </div>
             </fieldset>
-        </div>
-        <div>
         </div>
         <div class="text-right">
             <button type="submit" class="btn btn-primary">Create</button>

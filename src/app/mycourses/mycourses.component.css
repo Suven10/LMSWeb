@@ -1,6 +1,7 @@
 .imaged-block{
     margin: 10px;
     background: #eee;
+    min-height: 200px;
 }
 .imaged-block .text-on-bg{
     height: 90px;
@@ -33,6 +34,9 @@
     font-size: 14px;
     padding: 10px;
 }
+.block-disc p{
+    min-height: 42px;
+}
 
 .course-progress{
     height: 12px;
@@ -47,7 +51,7 @@
     position: absolute;
     bottom: 0;
     left: 0;
-    background: #64B5F6;
+    background: rgb(61, 73, 82);
 }
 
 .createnew-block
@@ -58,4 +62,8 @@
 .coursebtn
 {
     float: right;
+}
+
+.width-half{
+    width: 60%;
 }

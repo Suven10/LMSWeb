@@ -147,13 +147,14 @@ export class CourseComponent implements OnInit {
   }
 
   uploadFiles(chapter) {
-    debugger;
+    //debugger;
     let event=chapter.chapterPath;
     this.commonService.uploadFileData(event,chapter.code).subscribe(data=>{
       let res=data.json();
       let fileUrl='';
       if(res.status){
          fileUrl=res.fileUrl;
+         this.showSuccess("File uploaded successfully");
       }
       chapter.filePath=fileUrl;
       chapter.noOfModules=1;

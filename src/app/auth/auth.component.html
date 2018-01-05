@@ -1,8 +1,8 @@
 <section class="centered-form soft-block small-w" *ngIf="!isNewUser">
     <h3 class="text-center">Sign In</h3>
-    <p *ngIf="!isLoginValid" [ngClass] = "'error'">
+    <!-- <p *ngIf="!isLoginValid" [ngClass] = "'error'">
             Incorrect username/password.
-    </p>
+    </p> -->
     <form #signInForm="ngForm" (ngSubmit)="callSignIn(signInForm)">
         <div class="form-group">
             <input [(ngModel)]="authDetails.firstName" name="username" required type="text" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Username" required #username="ngModel">

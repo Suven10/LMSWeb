@@ -31,6 +31,13 @@ export class AuthService {
         return this.http.post('http://localhost:8012/Ascentic/API/src/Ascentic.AccountAPI/authenticate', JSON.stringify(authDetails),options);
     }
 
+    private callSignOut() :boolean{
+        document.cookie = 'uid' + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+        document.cookie = 'isInstructor' + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+        document.cookie = 'isStudent' + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+        return true;
+    }
+
     signUp (userobj):Observable<Response> {
         let signUpRes=this.signUpUser(userobj);
         return signUpRes;
@@ -39,4 +46,9 @@ export class AuthService {
     signIn (userobj) :Observable<Response>{
         return this.signInUser(userobj);
     }
+
+    signOut () :boolean{
+        return this.callSignOut();
+    }
+
 }

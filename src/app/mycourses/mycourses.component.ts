@@ -41,7 +41,7 @@ export class MycoursesComponent implements OnInit {
             if(cat.type == 'categoryCourses'){
                 this.isByCategory=true;
                 this.hideCat=true;
-                //debugger;
+                // debugger;
                 this.mycourses.getCategoryDet(cat.id).subscribe(course =>{
                     this.allCourses = course.json()[0];
                 });
@@ -50,12 +50,12 @@ export class MycoursesComponent implements OnInit {
             {
                 this.mycourses.allCourses().subscribe(course =>{
                     this.allCourses = course.json();
-                });;
+                });
             }
         }else{
             this.mycourses.allCourses().subscribe(course =>{
                 this.allCourses = course.json();
-            });;
+            });
         }
     }
 
@@ -74,6 +74,7 @@ export class MycoursesComponent implements OnInit {
     getCourseDet(category) {
         this.mycourses.getCategoryDet(category).subscribe(courses => {
             this.allCourses = courses.json()[0];
+            this.isByCategory=true;
         })
     }
 

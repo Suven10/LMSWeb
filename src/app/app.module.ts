@@ -23,6 +23,8 @@ import { MyDatePickerModule } from 'mydatepicker';
 import { QuizComponent } from './quiz/quiz.component';
 import {QuizService} from "./quiz/quiz.service";
 import { EnrolledComponent } from './mycourses/enrolled/enrolled.component';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { FileviewerComponent } from './mycourses/fileviewer/fileviewer.component';
 // import {Ng2ListViewCRUD} from "ng2-listview-crud";
 
 
@@ -38,7 +40,8 @@ import { EnrolledComponent } from './mycourses/enrolled/enrolled.component';
         IndividualCourseComponent,
         CourseComponent,
         QuizComponent,
-        EnrolledComponent
+        EnrolledComponent,
+        FileviewerComponent
     ],
     imports: [
         BrowserModule,
@@ -47,6 +50,7 @@ import { EnrolledComponent } from './mycourses/enrolled/enrolled.component';
         HttpModule,
         HttpClientModule,
         MyDatePickerModule,
+        PdfViewerModule,
         RouterModule.forRoot([
             {
                 path: '',
@@ -58,11 +62,17 @@ import { EnrolledComponent } from './mycourses/enrolled/enrolled.component';
                 path: 'home',
                 component: HomeComponent
             },{
+                path: 'home/:status',
+                component: TopnavComponent
+            },{
                 path: 'mycourses',
                 component: MycoursesComponent
             },{
                 path: 'courses/:course',
                 component: IndividualCourseComponent
+            },{
+                path: 'course/:course/:id/:chapterId',
+                component: FileviewerComponent
             },{
                 path: 'categourCourses/:category',
                 component: MycoursesComponent

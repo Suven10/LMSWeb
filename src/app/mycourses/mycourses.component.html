@@ -1,14 +1,24 @@
 <div class="row">
     <div class="clearfix createnew-block" *ngIf="!hideCat && showBtn">
-        <select class="form-control" (change)="getCourseDet($event.target.value)">
-            <option value="{{cat.guCatId}}" *ngFor="let cat of categories">{{cat.name}}</option>
-        </select>
-        <button class="btn btn-primary" (click)="createCourse()">Create New</button>
-        <button class="btn btn-primary" (click)="createCategory()">Create Category</button>
+        <div class="field-group-heading">
+            <label>Categories</label>
+        </div>
+        <div class="form-group">
+            <select class="form-control width-half" (change)="getCourseDet($event.target.value)">
+                <option value="Select">Select</option>
+                <option value="{{cat.guCatId}}" *ngFor="let cat of categories">{{cat.name}}</option>
+            </select>
+        </div>
+       <div class="form-group">
+            <button class="btn btn-primary" (click)="createCourse()">Create Course</button>
+            <button class="btn btn-primary" (click)="createCategory()">Create Category</button>
+        </div>
     </div>
-    <div class="clearfix createnew-block" *ngIf="hideCat && isByCategory && showBtn"> 
-        <button class="btn btn-primary" (click)="createCourse()">Create New</button>
-        <button class="btn btn-primary" (click)="createCategory()">Create Category</button>
+    <div class="form-group">
+        <div class="clearfix createnew-block" *ngIf="hideCat && isByCategory && showBtn"> 
+            <button class="btn btn-primary" (click)="createCourse()">Create Course</button>
+            <button class="btn btn-primary" (click)="createCategory()">Create Category</button>
+        </div>
     </div>
 </div>
 <div class="row" *ngIf="isByCategory">

@@ -12,18 +12,22 @@ import { Observable } from 'rxjs';
 })
 export class EnrolledComponent implements OnInit {
   accountId:'';
-  enrolledCourses;
+  enrolledCourses=[];
   enrolledRes;
+  enrolledResult;
   constructor(private router:Router,private courses:MycoursesService,private common:CommonService) { }
 
   ngOnInit() {
     // debugger;
     this.accountId=this.common.readCookieData("uid");
-    this.enrolledCourses = this.courses.getEnrolledCourse(this.accountId).subscribe(data=>{
-        this.enrolledRes=data.json()[0];
+    this.courses.getEnrolledCourse(this.accountId).subscribe(data=>{
+        this.enrolledRes=data.json();
         // debugger;
         if(this.enrolledRes.error=="00000"){
-            this.enrolledCourses=this.enrolledRes.CourseDetails;
+            this.enrolledResult=this.enrolledRes.result;
+            this.enrolledResult.forEach(courseDet => {
+              this.enrolledCourses.push(courseDet.CourseDetails[0]);
+            });
         }
     });
   }
