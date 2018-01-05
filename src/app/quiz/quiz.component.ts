@@ -97,7 +97,7 @@ export class QuizComponent implements OnInit {
   }
 
   isAnswered(question: Question) {
-    debugger;
+    // debugger;
     return question.options.find(x => x.selected) ? 'Answered' : 'Not Answered';
   };
 
@@ -106,7 +106,7 @@ export class QuizComponent implements OnInit {
   };
 
   onSubmit() {
-    debugger;
+    // debugger;
     let answers = [];
     this.quiz.questions.forEach(x => answers.push({ 'quizId': this.quiz.id, 'questionId': x.id, 'answered': x.answered }));
 

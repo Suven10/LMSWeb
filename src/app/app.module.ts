@@ -22,6 +22,7 @@ import { CourseComponent } from './mycourses/course/course.component';
 import { MyDatePickerModule } from 'mydatepicker';
 import { QuizComponent } from './quiz/quiz.component';
 import {QuizService} from "./quiz/quiz.service";
+import { EnrolledComponent } from './mycourses/enrolled/enrolled.component';
 // import {Ng2ListViewCRUD} from "ng2-listview-crud";
 
 
@@ -36,7 +37,8 @@ import {QuizService} from "./quiz/quiz.service";
         GroupByPipe,
         IndividualCourseComponent,
         CourseComponent,
-        QuizComponent
+        QuizComponent,
+        EnrolledComponent
     ],
     imports: [
         BrowserModule,
@@ -67,6 +69,9 @@ import {QuizService} from "./quiz/quiz.service";
             },{
                 path: 'course',
                 component: CourseComponent
+            },{
+                path: 'enrolled',
+                component: EnrolledComponent
             },{
                 path: 'quiz/:course',
                 component: QuizComponent

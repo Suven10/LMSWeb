@@ -16,6 +16,8 @@ import {CommonService} from "../../common.service";
 @Injectable()
 export class IndividualCourseComponent implements OnInit {
     courseDetails;
+    enrolledCourses;
+    enrolledRes;
     enrollRes;
     isEnrolled=false;
     accountId:string;
@@ -27,26 +29,28 @@ export class IndividualCourseComponent implements OnInit {
     }
 
     constructor(private courses: MycoursesService, private aroute: ActivatedRoute,private toastr:ToastsManager,private common:CommonService,private router:Router) {
+        //debugger;
+        this.accountId=this.common.readCookieData("uid");
         let courseId = this.aroute.snapshot.params['course'];
         if(courseId != undefined){
-            // let course = this.courses.getCourseDet(courseId);
-            // if(course.status){
-            //     this.courseDetails = course.data;
-            // }else{
-            //     this.courseDetails = null;
-            // }
+            this.enrolledCourses = this.courses.getEnrolledCourse(this.accountId).subscribe(data=>{
+                this.enrolledRes=data.json()[0];
+                // debugger;
+                if(this.enrolledRes.error=="00000"){
+                    this.enrolledCourses=this.enrolledRes.CourseDetails;
+                    this.isEnrolled=this.enrolledCourses.find(x=>x.guCourseId==courseId)?false:true;
+                }
+            });
+        
             this.courses.getCourseDet(courseId).subscribe(data=>{
                 let course = data.json();
-                // debugger;
                 this.courseDetails = course[0];
-                // if(this.courseDetails.type=="Quiz"){
-                //     this.router.navigate(['/quiz/'+courseId]);
-                // }
             });
         }
     }
 
-    ngOnInit() {}
+    ngOnInit() {
+    }
 
     enrollCourse(){
         this.accountId=this.common.readCookieData("uid");
@@ -57,7 +61,7 @@ export class IndividualCourseComponent implements OnInit {
                 this.enrollRes=data.json();
                 if(this.enrollRes.error=="00000"){
                 this.showSuccess("Course has been successfully enrolled!");
-                this.isEnrolled=true;
+                //this.isEnrolled=true;
                 }
                 else{
                 this.showError("Error while enrolling course!");

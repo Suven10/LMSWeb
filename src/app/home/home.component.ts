@@ -1,3 +1,4 @@
+import { CommonService } from './../common.service';
 import { Component, OnInit } from '@angular/core';
 import {HomeService} from "./home.service";
 import { MycoursesService } from "../mycourses/mycourses.service";
@@ -10,22 +11,26 @@ import { MycoursesComponent } from "../mycourses/mycourses.component";
 })
 export class HomeComponent implements OnInit {
     enrolledCourses;
+    enrolledRes;
     finishedCoursesCount:number = 0;
-
-    constructor(private home: HomeService, private mycoursesService: MycoursesService) { }
+    accountId:'';
+    constructor(private home: HomeService, private mycoursesService: MycoursesService,private common:CommonService) { }
 
     ngOnInit() {
-        // this.home.myCourses(null).subscribe(data => {
-        //     this.dashCounts = data
-        // });
-
-        //Get finished modules
-        this.enrolledCourses = this.mycoursesService.myCourses(null);
-        this.enrolledCourses.forEach(course => {
-            if(course.noOfModules == course.moduleFinished){
-                this.finishedCoursesCount ++;
+        this.accountId=this.common.readCookieData("uid");
+        this.enrolledCourses = this.mycoursesService.getEnrolledCourse(this.accountId).subscribe(data=>{
+            this.enrolledRes=data.json()[0];
+            // debugger;
+            if(this.enrolledRes.error=="00000"){
+                this.enrolledCourses=this.enrolledRes.CourseDetails;
+                this.enrolledCourses.forEach(course => {
+                    if(course.noOfModules == this.enrolledRes.coveredModules){
+                        this.finishedCoursesCount ++;
+                    }
+                });
             }
         });
+        
     }
 
 }

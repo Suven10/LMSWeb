@@ -124,35 +124,11 @@ export class MycoursesService {
         this.http=http;
     }
 
-    private getCurrentCourses (uid) {
-        // return this.http
-        //     .get('http://localhost:4200/src/data/courses.json')
-        //     .map((res:Response) => res.json())
-        return [{
-            "guCourseId": "D8697B6C-FAE9-B7CA-9DCD-286B730F3361",
-            "guCatId": "C8697B6C-FAE9-B7CA-9DCD-286B730F3361",
-            "code": "Food&Beverage",
-            "name": "Food & Beverage",
-            "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-            "type": "Quiz",
-            "filePath":"http://localhost:8012/Ascentic/Courses/food&b.json",
-            "noOfModules":30,
-            "createdDate": "2017-12-28 17:31:43.000",
-            "moduleFinished":10,
-            "image":"assets/course"
-        }, {
-            "guCourseId": "T8597B6C-FAE9-B7CA-9DCD-286B730F3361",
-            "guCatId": "C53BA156-CAD1-815D-30A2-946308F341E2",
-            "code": "Travel",
-            "name": "Travel",
-            "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-            "type": "Quiz",
-            "filePath":"http://localhost:8012/Ascentic/Courses/travel1.json",
-            "noOfModules":30,
-            "createdDate": "2017-12-28 17:30:50.000",
-            "moduleFinished":10,
-            "image":"assets/course"
-        }];
+    private getEnrolledCourseDet (id) {
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+        let enrolledCourse=this.http.get('http://localhost:8012/Ascentic/API/src/Ascentic.SubscriptionAPI/subscription/profile/'+id,options);
+        return enrolledCourse;
     }
 
     private getAllCourses ():Observable<Response> {
@@ -210,10 +186,6 @@ export class MycoursesService {
         return this.http.post('http://localhost:8012/Ascentic/API/src/Ascentic.SubscriptionAPI/subscription', JSON.stringify(courseDet),options);
     }
 
-    myCourses (id) {
-        return this.getCurrentCourses(id);
-    }
-
     allCourses () :Observable<Response> {
         return this.getAllCourses();
     }
@@ -243,6 +215,10 @@ export class MycoursesService {
 
     subscribeCourse(courseDet):Observable<Response>{
         return this.subscribeCourseData(courseDet);
+    }
+
+    getEnrolledCourse(id):Observable<Response> {
+        return this.getEnrolledCourseDet(id);
     }
 
 }

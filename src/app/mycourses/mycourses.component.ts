@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Input } from '@angular/core';
 // import { Http, Response } from '@angular/http';
 import {MycoursesService} from "./mycourses.service";
 import 'rxjs/add/operator/map';
@@ -12,15 +12,17 @@ import { Observable } from 'rxjs';
   styleUrls: ['./mycourses.component.css']
 })
 export class MycoursesComponent implements OnInit {
-
+    @Input() hideCat:boolean;
     allCourses;
     enrolledCourses;
     categoryCourses;
     categories;
     isByCategory=false;
+    
     constructor(private mycourses: MycoursesService, private router: Router, private aroute: ActivatedRoute) { }
 
     ngOnInit() {
+        //debugger;
         // this.home.myCourses(null).subscribe(data => {
         //     this.dashCounts = data
         // });
@@ -35,9 +37,10 @@ export class MycoursesComponent implements OnInit {
         if(cat.type != undefined || cat.type != null){
             if(cat.type == 'categoryCourses'){
                 this.isByCategory=true;
+                this.hideCat=true;
                 //debugger;
                 this.mycourses.getCategoryDet(cat.id).subscribe(course =>{
-                    this.allCourses = course.json();
+                    this.allCourses = course.json()[0];
                 });
             }
             else
@@ -67,7 +70,7 @@ export class MycoursesComponent implements OnInit {
 
     getCourseDet(category) {
         this.mycourses.getCategoryDet(category).subscribe(courses => {
-            this.allCourses = courses.json();
+            this.allCourses = courses.json()[0];
         })
     }
 
