@@ -27,7 +27,7 @@
             <li class="nav-item">
                 <a class="nav-link" routerLink="/mycourses">Courses</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" *ngIf="!hideCourse">
                 <a class="nav-link" routerLink="/enrolled">My Courses</a>
             </li>
 
@@ -36,7 +36,7 @@
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
 
-            <ul class="navbar-nav mr-auto">
+            <ul class="navbar-nav mr-auto" *ngIf="!hideCourse">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         My Profile
@@ -44,8 +44,13 @@
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" routerLink="/myprofile">My profile</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" routerLink="/signout">Sign Out</a>
+                        <a class="dropdown-item" (click)="signOut()">Sign Out</a>
                     </div>
+                </li>
+            </ul>
+            <ul class="navbar-nav mr-auto" *ngIf="hideCourse">
+                <li class="nav-item dropdown">
+                    <a class="nav-link" routerLink="/auth">Sign In</a>
                 </li>
             </ul>
         </form>

@@ -1,3 +1,4 @@
+import { CommonService } from './../common.service';
 import { Component, OnInit,Input } from '@angular/core';
 // import { Http, Response } from '@angular/http';
 import {MycoursesService} from "./mycourses.service";
@@ -18,22 +19,24 @@ export class MycoursesComponent implements OnInit {
     categoryCourses;
     categories;
     isByCategory=false;
-    
-    constructor(private mycourses: MycoursesService, private router: Router, private aroute: ActivatedRoute) { }
+    accountId;
+    showBtn:boolean;
+    constructor(private mycourses: MycoursesService, private router: Router, private aroute: ActivatedRoute,private common:CommonService) { }
 
     ngOnInit() {
-        //debugger;
-        // this.home.myCourses(null).subscribe(data => {
-        //     this.dashCounts = data
-        // });
-
-        // this.allCourses = this.mycourses.allCourses();
-        // this.enrolledCourses = this.mycourses.myCourses(null);
+        this.accountId=this.common.readCookieData("uid");
+        
         this.mycourses.allCategories().subscribe(categoreis => {
             this.categories = categoreis.json();
         });
 
         let cat = this.aroute.snapshot.params;
+        if(this.accountId==undefined || this.accountId==""){
+            this.showBtn=false;
+        }
+        else{
+            this.showBtn=true;
+        }
         if(cat.type != undefined || cat.type != null){
             if(cat.type == 'categoryCourses'){
                 this.isByCategory=true;

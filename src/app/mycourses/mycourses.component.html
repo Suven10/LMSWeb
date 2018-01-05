@@ -1,12 +1,12 @@
 <div class="row">
-    <div class="clearfix createnew-block" *ngIf="!hideCat">
+    <div class="clearfix createnew-block" *ngIf="!hideCat && showBtn">
         <select class="form-control" (change)="getCourseDet($event.target.value)">
             <option value="{{cat.guCatId}}" *ngFor="let cat of categories">{{cat.name}}</option>
         </select>
         <button class="btn btn-primary" (click)="createCourse()">Create New</button>
         <button class="btn btn-primary" (click)="createCategory()">Create Category</button>
     </div>
-    <div class="clearfix createnew-block" *ngIf="hideCat && isByCategory"> 
+    <div class="clearfix createnew-block" *ngIf="hideCat && isByCategory && showBtn"> 
         <button class="btn btn-primary" (click)="createCourse()">Create New</button>
         <button class="btn btn-primary" (click)="createCategory()">Create Category</button>
     </div>

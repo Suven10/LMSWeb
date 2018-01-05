@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import {HomeService} from "./home.service";
 import { MycoursesService } from "../mycourses/mycourses.service";
 import { MycoursesComponent } from "../mycourses/mycourses.component";
-
+import {Router, ActivatedRoute} from "@angular/router";
 @Component({
     selector: 'app-home',
     templateUrl: './home.component.html',
@@ -14,10 +14,14 @@ export class HomeComponent implements OnInit {
     enrolledRes;
     finishedCoursesCount:number = 0;
     accountId:'';
-    constructor(private home: HomeService, private mycoursesService: MycoursesService,private common:CommonService) { }
+    constructor(private router:Router,private home: HomeService, private mycoursesService: MycoursesService,private common:CommonService) { }
 
     ngOnInit() {
         this.accountId=this.common.readCookieData("uid");
+        if(this.accountId==undefined || this.accountId=="")
+        {
+            this.router.navigateByUrl('/auth');
+        }
         this.enrolledCourses = this.mycoursesService.getEnrolledCourse(this.accountId).subscribe(data=>{
             this.enrolledRes=data.json()[0];
             // debugger;

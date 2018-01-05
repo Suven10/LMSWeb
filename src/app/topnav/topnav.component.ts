@@ -1,3 +1,5 @@
+import { CommonService } from './../common.service';
+import { AuthComponent } from './../auth/auth.component';
 import { Component, OnInit } from '@angular/core';
 import {MycoursesService} from "../mycourses/mycourses.service";
 import {Course} from "../mycourses/courses.model";
@@ -10,15 +12,26 @@ import { Observable } from 'rxjs';
 @Component({
     selector: 'app-topnav',
     templateUrl: './topnav.component.html',
-    styleUrls: ['./topnav.component.css']
+    styleUrls: ['./topnav.component.css'],
+    providers:[AuthComponent]
 })
 export class TopnavComponent implements OnInit {
     allCategories;
-
-    constructor(private courses: MycoursesService, private router: Router) { }
+    accountId;
+    hideCourse;
+    constructor(private common:CommonService,private courses: MycoursesService, private router: Router,private auth:AuthComponent) { }
 
     ngOnInit() {
         // this.allCourses =  this.courses.allCourses();
+        this.accountId=this.common.readCookieData("uid");
+        if(this.accountId==undefined || this.accountId=="")
+        {
+            this.hideCourse=true;
+        }
+        else
+        {
+            this.hideCourse=false;
+        }
         this.courses.allCategories().subscribe(data=>{
             this.allCategories = data.json();
         });
@@ -32,6 +45,10 @@ export class TopnavComponent implements OnInit {
         this.courses.allCategories().subscribe(data=>{
             this.allCategories=data.json();
         })
+    }
+
+    signOut(){
+        this.auth.callSignOut();
     }
 
 }

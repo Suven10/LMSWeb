@@ -120,6 +120,13 @@ export class AuthComponent implements OnInit {
         });
     }
 
+    callSignOut() {
+        document.cookie = 'uid' + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+        document.cookie = 'isInstructor' + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+        document.cookie = 'isStudent' + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+        this.router.navigateByUrl('/auth');
+    }
+
     showSuccess() {
         this.toastr.success('Welcome onboard', 'Success!',{toastLife: 5000, showCloseButton: false});
     }
